@@ -1,13 +1,31 @@
-let express = require('express')
-let app = express()
+var express = require('express')
+var app = express()
+var bathroomRoute = require('./routes/bathrooms')
+var path = require('path')
+var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
 
-let bathroomRoute = require('./routes/bathrooms')
+const MongoClient = require("mongodb").MongoClient;
 
-let path = require('path')
+const connectionString = "mongodb+srv://admin:adminpassword@uiuc-toilet-kqm5l.mongodb.net/test?retryWrites=true&w=majority"
+
+app.listen(5000, () => {
+    MongoClient.connect(connectionString, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            throw error;
+        }
+        database = client.db("main");
+        collection = database.collection("bathrooms");
+        console.log("Connected to `" + "main" + "`!");
+    });
+});
+
+app.use(bodyParser.json())
 app.use((req, res, next) =>{
     console.log(`${new Date().toString()} => ${req.originalUrl}`)
     next()
 })
+
 
 app.use(bathroomRoute)
 app.use(express.static('public'))
