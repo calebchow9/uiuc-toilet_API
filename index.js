@@ -5,20 +5,22 @@ var path = require('path')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 
-const MongoClient = require("mongodb").MongoClient;
+// const MongoClient = require("mongodb").MongoClient;
 
-const connectionString = "mongodb+srv://admin:adminpassword@uiuc-toilet-kqm5l.mongodb.net/test?retryWrites=true&w=majority"
+const connectionString = "mongodb+srv://admin:adminpassword@uiuc-toilet-kqm5l.mongodb.net/test?retryWrites=true&w=majority";
 
-app.listen(5000, () => {
-    MongoClient.connect(connectionString, { useNewUrlParser: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        database = client.db("main");
-        collection = database.collection("bathrooms");
-        console.log("Connected to `" + "main" + "`!");
-    });
-});
+mongoose.connect(connectionString, { useNewUrlParser: true });
+
+// app.listen(5000, () => {
+//     MongoClient.connect(connectionString, { useNewUrlParser: true }, (error, client) => {
+//         if(error) {
+//             throw error;
+//         }
+//         database = client.db("main");
+//         collection = database.collection("bathrooms");
+//         console.log("Connected to `" + "main" + "`!");
+//     });
+// });
 
 app.use(bodyParser.json())
 app.use((req, res, next) =>{

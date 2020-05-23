@@ -1,12 +1,12 @@
 let mongoose = require('mongoose')
 
 let BathroomSchema = new mongoose.Schema({
-    id: {
+    name: {
         type: String,
         require: true,
-        unique: true
+        unique: false,
     },
-    name: {
+    gender: {
         type: String,
         require: true
     },
@@ -26,8 +26,6 @@ let BathroomSchema = new mongoose.Schema({
     closeTime: {
         type: Number
     }
-
-
 
 })
 

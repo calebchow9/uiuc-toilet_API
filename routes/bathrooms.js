@@ -3,7 +3,13 @@ let express = require('express')
 let router = express.Router()
 
 router.get('/bathroom', (req, res) => {
-    res.send('requested')
+    BathroomModel.find((err, bathrooms) => {
+        if(err) {
+            res.send(err)
+        } else{
+            res.json(bathrooms)
+        }
+    })
 })
 
 router.post('/bathroom', (req, res) => {
@@ -26,7 +32,18 @@ router.post('/bathroom', (req, res) => {
 })
 
 router.get('/bathroom/:name', (req, res) => {
-    res.send('requested')
+    if(!req.query._id){
+        return res.status(400).send('Request ID is missing')
+    }
+    BathroomModel.findOne({
+        _id: req.query._id
+    })
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
 })
 
 
