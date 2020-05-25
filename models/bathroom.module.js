@@ -11,14 +11,14 @@ let BathroomSchema = new mongoose.Schema({
         require: true
     },
     latitude: {
-        type: Number,
+        type: String,
         require: true,
-        default: 0.0
+        default: "0.0"
     },
     longitude: {
-        type: Number,
+        type: String,
         require: true,
-        default: 0.0
+        default: "0.0"
     },
     openTime: {
         type: Number
