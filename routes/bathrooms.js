@@ -2,6 +2,7 @@ let BathroomModel = require('../models/bathroom.module')
 let express = require('express')
 let router = express.Router()
 
+//get all bathrooms
 router.get('/bathroom', (req, res) => {
     BathroomModel.find((err, bathrooms) => {
         if(err) {
@@ -12,6 +13,7 @@ router.get('/bathroom', (req, res) => {
     })
 })
 
+//add bathroom
 router.post('/bathroom', (req, res) => {
 
     if(!req.body) {
@@ -31,6 +33,19 @@ router.post('/bathroom', (req, res) => {
         })
 })
 
+router.post('/bathroom/name', (req, res) => {
+    var brName = req.body.name;
+    BathroomModel.findOne({"name" : brName}, (err, bathroom) =>{
+        if(!err && bathroom != null && brName != null){
+            res.json(bathroom);
+        }
+        else{
+            res.status(500).json(err);
+        }
+    })
+})
+
+//get specific bathroom
 router.get('/bathroom/:name', (req, res) => {
     if(!req.query._id){
         return res.status(400).send('Request ID is missing')
