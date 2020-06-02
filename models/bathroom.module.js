@@ -4,7 +4,7 @@ let BathroomSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true,
-        unique: false,
+        unique: true,
     },
     gender: {
         type: String,
@@ -21,10 +21,14 @@ let BathroomSchema = new mongoose.Schema({
         default: "0.0"
     },
     openTime: {
-        type: Number
+        type: String
     },
     closeTime: {
-        type: Number
+        type: String
+    },
+    username: {
+        type: String,
+        require: false
     }
 
 })
