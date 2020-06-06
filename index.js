@@ -1,4 +1,5 @@
 var express = require('express')
+var http = require('http')
 var app = express()
 var bathroomRoute = require('./routes/bathrooms')
 var path = require('path')
@@ -9,7 +10,11 @@ var mongoose = require('mongoose')
 
 const connectionString = "mongodb+srv://admin:adminpassword@uiuc-toilet-kqm5l.mongodb.net/test?retryWrites=true&w=majority";
 
-mongoose.connect(connectionString, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose is connected')
+})
 
 // app.listen(5000, () => {
 //     MongoClient.connect(connectionString, { useNewUrlParser: true }, (error, client) => {
@@ -44,4 +49,6 @@ app.use((err, req, res, next) => {
 })
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
+//app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
+const server = http.createServer(app);
+server.listen(PORT);
