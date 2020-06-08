@@ -29,6 +29,12 @@ let BathroomSchema = new mongoose.Schema({
     username: {
         type: String,
         require: false
+    },
+    rating: {
+        type: Number,
+    }, 
+    comments: {
+        type: Array,
     }
 
 })
