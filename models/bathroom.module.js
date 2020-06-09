@@ -32,9 +32,14 @@ let BathroomSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
+        default: 0.0,
     }, 
+    numRatings: {
+        type: Number,
+        default: 0,
+    },
     comments: {
-        type: Array,
+        type: String,
     }
 
 })

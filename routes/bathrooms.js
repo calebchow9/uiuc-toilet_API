@@ -46,19 +46,26 @@ router.post('/bathroom/name', (req, res) => {
 })
 
 //get specific bathroom
-router.get('/bathroom/:name', (req, res) => {
-    if(!req.query._id){
-        return res.status(400).send('Request ID is missing')
-    }
-    BathroomModel.findOne({
-        _id: req.query._id
-    })
-        .then(doc => {
-            res.json(doc)
-        })
-        .catch(err => {
-            res.status(500).json(err)
-        })
+router.get('/bathroom/:id', (req, res) => {
+    BathroomModel.findOne({ _id: req.params.id }, (err, bathroom) => {
+        if(err){
+            res.json({ error: err});
+        }
+        else if(bathroom === null){
+            res.json({error: "Bathroom does not exist"});
+        }
+        else {
+            res.json({bathroom: bathroom});
+        }
+    });
+})
+
+//change rating, add comments
+router.patch('/bathroom/:id', (req, res) => {
+    BathroomModel.findOneAndUpdate({ _id: req.params.id}, {rating: req.body.rating, numRatings: req.body.numRatings, comments: req.body.comments}, {upsert: true}, function(err, doc){
+        if(err) return res.send(500, {error: err});
+        return res.send("Successfully updated.");
+    });
 })
 
 
